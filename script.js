@@ -1,70 +1,62 @@
-// ==============================
-// ROLAGEM SUAVE DOS LINKS
-// ==============================
+// ===============================
+// MENU SUAVE
+// ===============================
 
-document.querySelectorAll('nav a').forEach(link => {
+document.querySelectorAll("nav a").forEach(link => {
 
-    link.addEventListener('click', function(e){
+    link.addEventListener("click", function(e){
 
         e.preventDefault();
 
-        const destino = document.querySelector(this.getAttribute('href'));
+        const destino = document.querySelector(this.getAttribute("href"));
 
-        destino.scrollIntoView({
+        if(destino){
 
-            behavior:'smooth'
+            destino.scrollIntoView({
 
-        });
+                behavior:"smooth"
+
+            });
+
+        }
 
     });
 
 });
 
-// ==============================
-// DESTACAR MENU AO ROLAR
-// ==============================
 
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll("nav a");
+// ===============================
+// HEADER AO ROLAR
+// ===============================
+
+const header = document.querySelector("header");
 
 window.addEventListener("scroll", ()=>{
 
-    let atual = "";
+    if(window.scrollY > 80){
 
-    sections.forEach(section=>{
+        header.style.background = "rgba(255,255,255,.98)";
+        header.style.boxShadow = "0 12px 30px rgba(0,0,0,.12)";
+        header.style.padding = "14px 8%";
 
-        const topo = section.offsetTop - 150;
-        const altura = section.clientHeight;
+    }else{
 
-        if(pageYOffset >= topo){
+        header.style.background = "rgba(255,255,255,.93)";
+        header.style.boxShadow = "0 8px 25px rgba(0,0,0,.08)";
+        header.style.padding = "18px 8%";
 
-            atual = section.getAttribute("id");
-
-        }
-
-    });
-
-    navLinks.forEach(link=>{
-
-        link.classList.remove("ativo");
-
-        if(link.getAttribute("href") == "#" + atual){
-
-            link.classList.add("ativo");
-
-        }
-
-    });
+    }
 
 });
 
-// ==============================
+
+// ===============================
 // APARECER AO ROLAR
-// ==============================
+// ===============================
 
 const elementos = document.querySelectorAll(
 
-".card, .numero, .impacto, .pergunta, table"
+".card,.numero,.pergunta,.titulo,.texto,.video,.tabela"
 
 );
 
@@ -74,9 +66,8 @@ entries.forEach(entry=>{
 
 if(entry.isIntersecting){
 
-entry.target.style.opacity="1";
-
-entry.target.style.transform="translateY(0)";
+entry.target.style.opacity = "1";
+entry.target.style.transform = "translateY(0)";
 
 }
 
@@ -84,7 +75,7 @@ entry.target.style.transform="translateY(0)";
 
 },{
 
-threshold:0.15
+threshold:.15
 
 });
 
@@ -98,48 +89,48 @@ observer.observe(el);
 
 });
 
-// ==============================
+
+// ===============================
 // BOTÃO VOLTAR AO TOPO
-// ==============================
+// ===============================
 
-const botaoTopo = document.createElement("button");
+const topo = document.createElement("button");
 
-botaoTopo.innerHTML="↑";
+topo.innerHTML = '<i class="fa-solid fa-chevron-up"></i>';
 
-botaoTopo.id="topo";
+document.body.appendChild(topo);
 
-document.body.appendChild(botaoTopo);
+topo.style.position = "fixed";
+topo.style.right = "25px";
+topo.style.bottom = "25px";
+topo.style.width = "55px";
+topo.style.height = "55px";
+topo.style.border = "none";
+topo.style.borderRadius = "50%";
+topo.style.background = "#2196f3";
+topo.style.color = "white";
+topo.style.fontSize = "20px";
+topo.style.cursor = "pointer";
+topo.style.display = "none";
+topo.style.boxShadow = "0 15px 35px rgba(0,0,0,.25)";
+topo.style.transition = ".3s";
+topo.style.zIndex = "999";
 
-botaoTopo.style.position="fixed";
-botaoTopo.style.right="25px";
-botaoTopo.style.bottom="25px";
-botaoTopo.style.width="50px";
-botaoTopo.style.height="50px";
-botaoTopo.style.border="none";
-botaoTopo.style.borderRadius="50%";
-botaoTopo.style.background="#2196f3";
-botaoTopo.style.color="white";
-botaoTopo.style.fontSize="22px";
-botaoTopo.style.cursor="pointer";
-botaoTopo.style.display="none";
-botaoTopo.style.boxShadow="0 10px 20px rgba(0,0,0,.2)";
-botaoTopo.style.transition=".3s";
-
-window.addEventListener("scroll",()=>{
+window.addEventListener("scroll", ()=>{
 
 if(window.scrollY > 400){
 
-botaoTopo.style.display="block";
+topo.style.display = "block";
 
 }else{
 
-botaoTopo.style.display="none";
+topo.style.display = "none";
 
 }
 
 });
 
-botaoTopo.addEventListener("click",()=>{
+topo.addEventListener("click", ()=>{
 
 window.scrollTo({
 
@@ -151,32 +142,124 @@ behavior:"smooth"
 
 });
 
-// ==============================
+
+// ===============================
 // EFEITO NOS CARDS
-// ==============================
+// ===============================
 
 document.querySelectorAll(".card").forEach(card=>{
 
 card.addEventListener("mouseenter",()=>{
 
-card.style.transform="translateY(-10px) scale(1.02)";
+card.style.transform="translateY(-12px)";
 
 });
 
 card.addEventListener("mouseleave",()=>{
 
-card.style.transform="translateY(0) scale(1)";
+card.style.transform="translateY(0px)";
 
 });
 
 });
 
-// ==============================
-// ANO AUTOMÁTICO NO RODAPÉ
-// ==============================
 
-const rodape = document.querySelector("footer");
+// ===============================
+// DESTACAR MENU
+// ===============================
 
-const ano = new Date().getFullYear();
+const secoes = document.querySelectorAll("section");
 
-rodape.innerHTML += `<p style="margin-top:15px;opacity:.7;">© ${ano}</p>`;
+const links = document.querySelectorAll("nav a");
+
+window.addEventListener("scroll",()=>{
+
+let atual = "";
+
+secoes.forEach(sec=>{
+
+const topo = sec.offsetTop - 200;
+
+if(pageYOffset >= topo){
+
+atual = sec.getAttribute("id");
+
+}
+
+});
+
+links.forEach(link=>{
+
+link.style.color="#1b4965";
+link.style.fontWeight="500";
+
+if(link.getAttribute("href")=="#"+atual){
+
+link.style.color="#2196f3";
+link.style.fontWeight="700";
+
+}
+
+});
+
+});
+
+
+// ===============================
+// CONTADOR DOS NÚMEROS
+// ===============================
+
+const numeros = document.querySelectorAll(".numero h3");
+
+numeros.forEach(numero=>{
+
+const texto = numero.innerText;
+
+const valor = parseInt(texto);
+
+if(!isNaN(valor)){
+
+let atual = 0;
+
+const intervalo = setInterval(()=>{
+
+atual++;
+
+numero.innerText = atual;
+
+if(atual>=valor){
+
+clearInterval(intervalo);
+
+numero.innerText = texto;
+
+}
+
+},25);
+
+}
+
+});
+
+
+// ===============================
+// ANIMAÇÃO DO HERO
+// ===============================
+
+window.addEventListener("load",()=>{
+
+const hero = document.querySelector(".hero-texto");
+
+hero.style.opacity="0";
+hero.style.transform="translateY(40px)";
+
+setTimeout(()=>{
+
+hero.style.transition="1.2s";
+
+hero.style.opacity="1";
+hero.style.transform="translateY(0)";
+
+},300);
+
+});
